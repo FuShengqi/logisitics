@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fsq.mappers.OrderMapper">
+    <!-- 此处select标签的id值对应Mapper类中方法名 -->
+    <resultMap type="com.fsq.entity.Order" id="orderMap">
+        <id property="id" column="id" />
+        <id property="orderUUID" column="order_uuid" />
+        <result property="senderName" column="sender_name" />
+        <result property="senderAddress" column="sender_address" />
+        <result property="senderTel" column="sender_tel" />
+        <result property="receiverName" column="receiver_name" />
+        <result property="receiverAddress" column="receiver_address"/>
+        <result property="receiverTel" column="receiver_tel" />
+        <result property="weight" column="weight" />
+        <result property="serviceName" column="service_name" />
+        <result property="price" column="price" />
+        <result property="orderDate" column="order_date" />
+        <result property="status" column="status" />
+    </resultMap>
+
+
+    <select id="getAllFinishedOrder" parameterType="String" resultMap="orderMap">
+        select * from t_order where status = 1 AND sender_name = #{senderName}
+    </select>
+
+    <select id="getAllDealedOrder" resultMap="orderMap">
+        select * from t_order where status = 1
+    </select>
+
+    <select id="getAllUnfinishedOrder" parameterType="String" resultMap="orderMap">
+        select * from t_order where status = 0 AND sender_name = #{senderName}
+    </select>
+
+    <select id="getAllUndealedOrder"  resultMap="orderMap">
+        select * from t_order where status = 0
+    </select>
+
+    <select id="getOrderBySenderName" parameterType="String" resultMap="orderMap">
+        select * from t_order where sender_name = #{senderName}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*)  from t_order;
+    </select>
+
+
+
+
+    <!--<insert id="insertUser" parameterType="java.util.HashMap">-->
+    <!--insert into t_user  values (#{id},#{userName},#{password},#{age})-->
+    <!--</insert>-->
+    <insert id="insertOrder" parameterType="com.fsq.entity.Order">
+        insert into t_order(order_uuid, sender_name, sender_address, sender_tel, receiver_name, receiver_address,
+        receiver_tel, weight, service_name, price, order_date, status)
+        values (#{orderUUID}, #{senderName},#{senderAddress},#{senderTel}, #{receiverName},  #{receiverAddress},
+        #{receiverTel}, #{weight}, #{serviceName}, #{price}, #{orderDate}, #{status});
+    </insert>
+
+    <update id="updateOrderStatus" >
+        update t_order
+        set status  = #{0}
+        where sender_name= #{1}
+    </update>
+
+</mapper>

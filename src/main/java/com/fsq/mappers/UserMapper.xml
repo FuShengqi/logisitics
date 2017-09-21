@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fsq.mappers.UserMapper">
+    <!-- 此处select标签的id值对应Mapper类中方法名 -->
+    <resultMap type="com.fsq.entity.User" id="userMap">
+        <id property="id" column="id" />
+        <id property="userUUID" column="user_uuid" />
+        <result property="userName" column="user_name" />
+        <result property="userPassword" column="user_password" />
+        <result property="userEmail" column="user_email" />
+        <result property="userIncome" column="user_income" />
+        <result property="userOutcome" column="user_outcome" />
+    </resultMap>
+
+
+    <select id="getUserById" parameterType="int" resultMap="userMap">
+        select * from t_user where id = #{id}
+    </select>
+
+    <select id="getUserByUserName" parameterType="String" resultMap="userMap">
+        select * from t_user where user_name = #{userName}
+    </select>
+
+    <select id="getUsernameById" parameterType="int" resultType="java.lang.String">
+        select user_name from t_user where id = #{id}
+    </select>
+
+    <select id="getAllUsers" resultMap="userMap">
+        select * from t_user;
+    </select>
+
+    <select id="getUserByUserEmail" parameterType="String" resultMap="userMap">
+        select * from t_user where user_email = #{userEmail}
+    </select>
+
+    <select id="count" resultType="java.lang.Integer">
+        select count(*)  from t_user;
+    </select>
+
+
+
+
+    <!--<insert id="insertUser" parameterType="java.util.HashMap">-->
+    <!--insert into t_user  values (#{id},#{userName},#{password},#{age})-->
+    <!--</insert>-->
+    <insert id="insertUser" parameterType="com.fsq.entity.User">
+        insert into t_user(user_uuid, user_name, user_password, user_email, user_income, user_outcome)
+         values (#{userUUID}, #{userName},#{userPassword},#{userEmail}, #{userIncome}, #{userOutcome})
+    </insert>
+
+    <delete id="deleteUserById" parameterType="int" >
+        delete from t_user where id = #{id}
+    </delete>
+
+
+
+    <!-- update需要进一步更改-->
+    <update id="updateUser"  parameterType="com.fsq.entity.User" >
+        update t_user set user_name  = #{userName},
+         user_password = #{userPassword},
+         user_email = #{userEmail},
+         user_income = #{userIncome},
+         user_outcome = #{userOutcome}
+         where id= #{id}
+    </update>
+
+
+</mapper>
