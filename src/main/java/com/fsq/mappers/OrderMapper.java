@@ -22,7 +22,7 @@ public interface OrderMapper {
 
     List<Order> getOrderBySenderName(String SenderName);
 
-    void updateOrderStatus(int status, String senderName);
+    void updateOrderStatus(int status, String orderId);
 
     int count();
 

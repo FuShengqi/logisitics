@@ -62,7 +62,7 @@
     <update id="updateOrderStatus" >
         update t_order
         set status  = #{0}
-        where sender_name= #{1}
+        where order_uuid= #{1}
     </update>
 
 </mapper>

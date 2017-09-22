@@ -1,32 +1,23 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: FuShengqi
+  Date: 2017/9/22
+  Time: 15:00
+  To change this template use File | Settings | File Templates.
+--%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
 <html>
-
 <head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>未处理订单</title>
-
+    <title>已处理订单</title>
     <link href="assets/inspinia/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
 
     <link href="assets/inspinia/css/animate.css" rel="stylesheet">
     <link href="assets/inspinia/css/style.css" rel="stylesheet">
-
-    <style type="text/css">
-        .order_uuid{
-            visibility: hidden;
-        }
-    </style>
-
 </head>
-
-<body class="">
-
+<body>
 <div id="wrapper">
 
     <%
@@ -55,7 +46,7 @@
                 </li>
 
                 <li>
-                    <a href="#"><i class="fa fa-diamond"></i> <span class="nav-label">总览</span></a>
+                    <a href="admin_panel.html"><i class="fa fa-diamond"></i> <span class="nav-label">总览</span></a>
                 </li>
                 <li>
                     <a href="undealed_orders.html"><i class="fa fa-diamond"></i> <span class="nav-label">未处理订单</span></a>
@@ -204,12 +195,12 @@
             <c:choose>
                 <c:when test="${fn:length(orders) != 0}">
                     <div class="col-sm-4">
-                        <h2>未处理订单</h2>
+                        <h2>已处理订单</h2>
                     </div>
                 </c:when>
                 <c:otherwise>
                     <div class="col-sm-4">
-                        <h2>暂无未处理订单</h2>
+                        <h2>暂无已处理订单</h2>
                     </div>
                 </c:otherwise>
             </c:choose>
@@ -221,7 +212,7 @@
                     <div class="ibox float-e-margins">
                         <div class="ibox-title">
                             <h5>订单编号：<span id="order_id"><c:out value="${order.orderUUID}"></c:out></span></h5>
-                            <h5>&nbsp;&nbsp;&nbsp;状态：未完成 &nbsp;&nbsp;日期：<c:out value="${order.orderDate.toLocaleString()}"></c:out></h5>
+                            <h5>&nbsp;&nbsp;&nbsp;状态：已处理 &nbsp;&nbsp;日期：<c:out value="${order.orderDate.toLocaleString()}"></c:out></h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -294,17 +285,6 @@
                                     </div>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <span class="order_uuid"><c:out value="${order.orderUUID}"></c:out></span>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <button name="acceptButton" id="accept_button" class="btn btn-primary block full-width m-b">接受订单</button>
-                                    </div>
-                                </div>
-
                             </fieldset>
                         </div>
                     </div>
@@ -324,99 +304,5 @@
 <!-- Custom and plugin javascript -->
 <script src="assets/inspinia/js/inspinia.js"></script>
 <script src="assets/inspinia/js/plugins/pace/pace.min.js"></script>
-
-<script>
-    $(function () {
-        /*var orderId = $("#order_id").text();
-        console.log("ajax");
-        console.log(orderId);
-        orderId = "orderId="+orderId;
-        console.log(orderId);*/
-
-        var acceptBtns = document.getElementsByName("acceptButton");
-
-        console.log("acceptBtns="+acceptBtns.length);
-
-        var $acceptBtns = $(acceptBtns);
-        $acceptBtns.each(function () {
-            $(this).click(function () {
-                console.log("you clicked button");
-                console.log($(this).parent().prev().text());
-                var orderId = $(this).parent().prev().text();
-                orderId = $.trim(orderId);
-                orderId = "orderId="+orderId;
-                //alert("you clicked button");
-                $.ajax({
-                    url :  "accept_order?" + orderId,
-                    dataType : "json",
-                    success: function (data, textStatus) {
-                        /*console.log(data);
-                        alert("AJAX 请求已成功完成");
-                        console.log($(this));
-                        console.log($(this).text());*/
-
-                        //$btn.attr("disabled",true);
-                    }
-                });
-                $(this).text("订单已处理");
-                $(this).attr("disabled",true);
-            })
-        })
-
-        /*for(var i=0; i<acceptBtns.length; i++){
-//            var $btn = $(acceptBtns[i]);
-//            console.log("btn text ="+$btn.text());
-//            $btn.bind("click", function () {
-//                console.log("you clicked button");
-//                alert("you clicked button");
-//                $.ajax({
-//                    url :  "accept_order?" + orderId,
-//                    dataType : "json",
-//                    success: function (data, textStatus) {
-//                        console.log(data);
-//                        alert("AJAX 请求已成功完成");
-//                        //$(acceptBtns[i]).text("订单已处理");
-//                        //$btn.attr("disabled",true);
-//                    }
-//                });
-//                $(acceptBtns[i]).text("订单已处理");
-//            })
-            $btn.click(function () {
-                console.log("you clicked button");
-                alert("you clicked button");
-                $.ajax({
-                    url :  "accept_order?" + orderId,
-                    dataType : "json",
-                    success: function (data, textStatus) {
-                        console.log(data);
-                        alert("AJAX 请求已成功完成");
-                        $btn.text("订单已处理");
-                        //$btn.attr("disabled",true);
-                    }
-                });
-            })*/
-            //console.log(btn);
-            /*acceptBtns[i].onclick = function () {
-                console.log("you clicked button");
-                alert("you clicked button");
-            }*/
-        //}
-
-        /*$("#accept_button").click(function () {
-            $.ajax({
-                url :  "accept_order?" + senderName,
-                dataType : "json",
-                success: function (data, textStatus) {
-                    console.log(data);
-                    alert("AJAX 请求已成功完成");
-
-                }
-            });
-        });*/
-
-    })
-</script>
-
 </body>
-
 </html>

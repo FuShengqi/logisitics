@@ -33,10 +33,12 @@ public class UserController {
         User user = new User();
         ModelAndView mav = new ModelAndView("index");
         Cookie[] cookies = request.getCookies();
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals("userName")){
-                user = ius.getUserByUserName(cookie.getValue());
-                break;
+        if(cookies != null){
+            for(Cookie cookie:cookies){
+                if(cookie.getName().equals("userName")){
+                    user = ius.getUserByUserName(cookie.getValue());
+                    break;
+                }
             }
         }
         mav.addObject("user", user);

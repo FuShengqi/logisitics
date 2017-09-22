@@ -58,12 +58,25 @@ public class AdminController {
         return mav;
     }
 
+    @RequestMapping("dealed_orders.html")
+    public ModelAndView dealedOrder(){
+        List<Order> orders = ios.getAllDealedOrder();
+        System.out.println("------dealed order------");
+        System.out.println(JSON.toJSONString(orders));
+        System.out.println("------dealed order------");
+
+        ModelAndView mav = new ModelAndView("dealed_orders");
+        mav.addObject("orders", orders);
+        return mav;
+    }
+
     @RequestMapping("accept_order")
     @ResponseBody
     public User acceptOrder(HttpServletRequest request){
-        String senderName = request.getParameter("senderName");
+        String orderId = request.getParameter("orderId");
         System.out.println("------accept order------");
-        ios.updateOrderStatus(1, senderName);
+        System.out.println(orderId);
+        ios.updateOrderStatus(1, orderId);
         System.out.println("------accept order has done------");
         User user = new User();
         return user;
