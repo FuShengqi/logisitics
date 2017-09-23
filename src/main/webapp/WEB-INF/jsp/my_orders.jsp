@@ -55,8 +55,8 @@
                 <li class="nav-header">
                     <div class="dropdown profile-element">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="form_wizard.html#">
-                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">您好，<%=userName%></strong>
-
+                            <span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">您好，<%=userName%></strong> </span></span>
+                        </a>
                     </div>
                     <div class="logo-element">
                         IN+
@@ -73,10 +73,12 @@
                     <a href="finished_orders.html"><i class="fa fa-diamond"></i> <span class="nav-label">已完成订单</span></a>
                 </li>
                 <li>
+                    <a href="my_message.html"><i class="fa fa-diamond"></i> <span class="nav-label">我的留言</span></a>
+                </li>
+                <li>
                     <a href="layouts.html"><i class="fa fa-diamond"></i> <span class="nav-label">我的收支情况</span></a>
                 </li>
-
-
+            </ul>
         </div>
     </nav>
 

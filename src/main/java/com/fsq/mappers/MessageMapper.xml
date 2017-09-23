@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fsq.mappers.MessageMapper">
+    <!-- 此处select标签的id值对应Mapper类中方法名 -->
+    <resultMap type="com.fsq.entity.Message" id="messageMap">
+        <id property="id" column="id" />
+        <id property="uuid" column="msg_uuid" />
+        <result property="userName" column="user_name" />
+        <result property="userContact" column="user_contact" />
+        <result property="msgDate" column="msg_date" />
+        <result property="msgTitle" column="msg_title" />
+        <result property="msgContent" column="msg_content" />
+        <result property="msgStatus" column="msg_status" />
+        <result property="msgResponse" column="msg_response" />
+    </resultMap>
+
+
+    <select id="getAllResponseMsg" resultMap="messageMap">
+        select * from t_message where msg_status = 1
+    </select>
+
+    <select id="getAllResponseMsgByUserName" parameterType="String" resultMap="messageMap">
+        select * from t_message where msg_status = 1 AND user_name = #{userName}
+    </select>
+
+    <select id="getAllUnresponseMsg" resultMap="messageMap">
+        select * from t_message where msg_status = 0
+    </select>
+
+    <select id="getAllUnresponseMegByUserName" parameterType="String" resultMap="messageMap">
+        select * from t_message where msg_status = 0 AND user_name = #{userName}
+    </select>
+
+    <select id="getMessageByUUID" parameterType="String" resultMap="messageMap">
+        select * from t_message where msg_uuid = #{uuid}
+    </select>
+
+    <select id="getMessageByUserName" parameterType="String" resultMap="messageMap">
+        select * from t_message where user_name = #{userName}
+    </select>
+
+    <insert id="insertMsg" parameterType="com.fsq.entity.Message">
+        insert into t_message(msg_uuid, user_name, user_contact, msg_date, msg_title, msg_content, msg_status)
+        values (#{uuid}, #{userName}, #{userContact},#{msgDate},#{msgTitle}, #{msgContent}, #{msgStatus});
+    </insert>
+
+    <update id="addResponseByUUID">
+        update t_message set msg_response = #{1} where msg_uuid = #{0}
+    </update>
+
+    <update id="updateMessageStatus">
+        update t_message set msg_status = #{1} where msg_uuid = #{0}
+    </update>
+
+</mapper>

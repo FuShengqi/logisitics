@@ -1,46 +1,46 @@
-<%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%--
   Created by IntelliJ IDEA.
   User: FuShengqi
-  Date: 2017/9/17
-  Time: 21:29
+  Date: 2017/9/22
+  Time: 20:26
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html>
+<html lang="en">
 
 <head>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Empty Page</title>
+    <title>留言详情</title>
 
     <link href="assets/inspinia/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/inspinia/font-awesome/css/font-awesome.css" rel="stylesheet">
-
+    <link href="assets/inspinia/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="assets/inspinia/css/plugins/steps/jquery.steps.css" rel="stylesheet">
     <link href="assets/inspinia/css/animate.css" rel="stylesheet">
     <link href="assets/inspinia/css/style.css" rel="stylesheet">
 
 </head>
 
-<body class="">
+<body>
+
+<%
+    Cookie[] cookies = request.getCookies();
+    String userName = null;
+    for(Cookie cookie:cookies){
+        if(cookie.getName().equals("userName")){
+            userName = cookie.getValue();
+            break;
+        }
+    }
+%>
 
 <div id="wrapper">
-
-    <%
-        Cookie[] cookies = request.getCookies();
-        String userName = null;
-        for(Cookie cookie:cookies){
-            if(cookie.getName().equals("userName")){
-                userName = cookie.getValue();
-                break;
-            }
-        }
-    %>
 
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
@@ -77,9 +77,9 @@
 
     <div id="page-wrapper" class="gray-bg">
         <div class="row border-bottom">
-            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="form_wizard.html#"><i class="fa fa-bars"></i> </a>
                     <form role="search" class="navbar-form-custom" action="search_results.html">
                         <div class="form-group">
                             <%--<input type="text" placeholder="Search for something..." class="form-control" name="top-search" id="top-search">--%>
@@ -88,13 +88,13 @@
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="form_wizard.html#">
                             <i class="fa fa-envelope"></i>  <span class="label label-warning">16</span>
                         </a>
                         <ul class="dropdown-menu dropdown-messages">
                             <li>
                                 <div class="dropdown-messages-box">
-                                    <a href="#" class="pull-left">
+                                    <a href="profile.html" class="pull-left">
                                         <img alt="image" class="img-circle" src="img/a7.jpg">
                                     </a>
                                     <div class="media-body">
@@ -141,7 +141,7 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="empty_page.html#">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="form_wizard.html#">
                             <i class="fa fa-bell"></i>  <span class="label label-primary">8</span>
                         </a>
                         <ul class="dropdown-menu dropdown-alerts">
@@ -193,108 +193,72 @@
 
             </nav>
         </div>
-        <div class="row wrapper border-bottom white-bg page-heading">
-            <c:choose>
-                <c:when test="${fn:length(orders) != 0}">
-                    <div class="col-sm-4">
-                        <h2>已完成订单</h2>
-                    </div>
-                </c:when>
-                <c:otherwise>
-                    <div class="col-sm-4">
-                        <h2>暂无已完成订单</h2>
-                    </div>
-                </c:otherwise>
-            </c:choose>
-        </div>
+        <div>
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>留言详情</h2>
+                </div>
+                <div class="col-lg-2">
 
-        <c:forEach items="${orders}" var="order">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox float-e-margins">
-                        <div class="ibox-title">
-                            <h5>订单编号：<c:out value="${order.orderUUID}"></c:out></h5>
-                            <h5>&nbsp;&nbsp;&nbsp;状态：已完成 &nbsp;&nbsp;日期：<c:out value="${order.orderDate.toLocaleString()}"></c:out></h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="typography.html#">Config option 1</a>
-                                    </li>
-                                    <li><a href="typography.html#">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <fieldset>
-                                <div class="row">
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>寄件人姓名 : <c:out value="${order.senderName}"></c:out></label>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label>寄件地址 : <c:out value="${order.senderAddress}"></c:out></label>
-                                                <%--<input  name="senderAddress" type="text" class="form-control required">--%>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>寄件人电话 : <c:out value="${order.senderTel}"></c:out></label>
-                                                <%--<input  name="senderTel" type="text" class="form-control required">--%>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>收件人姓名 : <c:out value="${order.receiverName}"></c:out></label>
-                                                <%--<input  name="receiverName" type="text" class="form-control required">--%>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>收件人地址 : <c:out value="${order.receiverAddress}"></c:out></label>
-                                                <%--<input  name="receiverAddress" type="text" class="form-control required">--%>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>收件人电话 : <c:out value="${order.receiverTel}"></c:out></label>
-                                                <%--<input  name="receiverTel" type="text" class="form-control required">--%>
-                                        </div>
-                                    </div>
-
-                                    <div class="col-lg-4">
-                                        <div class="form-group">
-                                            <label>货物重量 : <c:out value="${order.weight}"></c:out></label>
-                                                <%--<input  name="weight" type="text" class="form-control required">--%>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>配送类型 : <c:out value="${order.serviceName}"></c:out></label>
-                                                <%--<select class="form-control m-b" name="serviceName">--%>
-                                                <%--<option value="1">物流普运  ¥10/kg</option>--%>
-                                                <%--<option value="2">物流快运  ¥20/kg</option>--%>
-                                                <%--<option value="3">重货专运  ¥30/kg</option>--%>
-                                                <%--</select>--%>
-
-                                        </div>
-                                        <div class="form-group">
-                                            <label>配送金额 : <c:out value="${order.price}"></c:out></label>
-                                                <%--<input id="confirm" name="confirm" type="text" class="form-control required">--%>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </fieldset>
-                        </div>
-                    </div>
                 </div>
             </div>
-        </c:forEach>
+        </div>
+
+        <div class="row wrapper wrapper-content animated fadeInRight">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <div class="form-group">
+                            <h3>留言主题：${message.msgTitle}</h3>
+                            <span>留言人姓名：${message.userName}</span> &nbsp;&nbsp; <span>留言时间：${message.msgDate.toLocaleString()}</span> &nbsp;&nbsp;
+                            <c:choose>
+                                <c:when test="${message.msgResponse != null}">
+                                    <span>状态：已回复</span>
+                                </c:when>
+                                <c:otherwise>
+                                    <span>状态：未回复</span>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
+                        <div class="faq-answer">
+                            <p>
+                                ${message.msgContent}
+                            </p>
+                        </div>
+                        <br>
+                        <h3>回复如下：</h3>
+                        <c:choose>
+                            <c:when test="${message.msgResponse != null}">
+                                <div class="faq-answer">
+                                    <p>
+                                            ${message.msgResponse}
+                                    </p>
+                                </div>
+                            </c:when>
+                        </c:choose>
+                    </div>
+                    <%--<div class="form-group">
+                        <textarea class="form-control" name="msgContent" rows="6" placeholder="您的回复"></textarea>
+                    </div>
+                    <div class="form-group text-center">
+                        <a href="" class="btn btn-primary">回复</a>
+                    </div>--%>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="pull-right">
+                <%--10GB of <strong>250GB</strong> Free.--%>
+            </div>
+            <div>
+                <%--<strong>Copyright</strong> Example Company &copy; 2014-2015--%>
+            </div>
+        </div>
+
     </div>
 </div>
+
+
 
 <!-- Mainly scripts -->
 <script src="assets/inspinia/js/jquery-2.1.1.js"></script>
@@ -306,7 +270,14 @@
 <script src="assets/inspinia/js/inspinia.js"></script>
 <script src="assets/inspinia/js/plugins/pace/pace.min.js"></script>
 
+<!-- Steps -->
+<script src="assets/inspinia/js/plugins/staps/jquery.steps.min.js"></script>
+
+<!-- Jquery Validate -->
+<script src="assets/inspinia/js/plugins/validate/jquery.validate.min.js"></script>
+
 
 </body>
 
 </html>
+

@@ -60,5 +60,6 @@ CREATE TABLE t_message(
   msg_title CHAR(50),
   msg_content TEXT,
   msg_status INT(2),
+  msg_response TEXT,
   FOREIGN KEY (user_id) REFERENCES t_user(id)
 );

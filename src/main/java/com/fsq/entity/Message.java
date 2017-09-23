@@ -9,9 +9,11 @@ public class Message {
 
     private int id;
 
-    private int userId;
+    private String uuid;
 
     private String userName;
+
+    private String userContact;
 
     private Date msgDate;
 
@@ -19,7 +21,9 @@ public class Message {
 
     private String msgContent;
 
-    private String msgStatus;
+    private int msgStatus;
+
+    private String msgResponse;
 
     public int getId() {
         return id;
@@ -29,13 +33,6 @@ public class Message {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
 
     public String getUserName() {
         return userName;
@@ -69,11 +66,35 @@ public class Message {
         this.msgContent = msgContent;
     }
 
-    public String getMsgStatus() {
+    public int getMsgStatus() {
         return msgStatus;
     }
 
-    public void setMsgStatus(String msgStatus) {
+    public void setMsgStatus(int msgStatus) {
         this.msgStatus = msgStatus;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getUserContact() {
+        return userContact;
+    }
+
+    public void setUserContact(String userContact) {
+        this.userContact = userContact;
+    }
+
+    public String getMsgResponse() {
+        return msgResponse;
+    }
+
+    public void setMsgResponse(String msgResponse) {
+        this.msgResponse = msgResponse;
     }
 }
